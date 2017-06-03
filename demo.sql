@@ -28,4 +28,6 @@ select * from User_role_privs where grantee = 'NV101';
 
 grant role_nv to NV101;
 
+revoke role_giamdoc from nv101;
+
 select * from User_role_privs;

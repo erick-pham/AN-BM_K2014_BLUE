@@ -10,10 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,7 +44,7 @@ public class Main_Admin extends javax.swing.JFrame {
         setTitle("QUẢN LÝ DỰ ÁN");
         setResizable(false);
         dateNgaySinh.setDate(Calendar.getInstance().getTime());
-        loadInfomation();
+        loadUserName();
     }
     public Main_Admin() {
         initComponents();
@@ -95,10 +97,10 @@ public class Main_Admin extends javax.swing.JFrame {
         listRoleDuocCap = new javax.swing.JList<>();
         btnCapRole = new javax.swing.JButton();
         btnThuRole = new javax.swing.JButton();
-        btnCapNhatRoleChoNV = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableRole = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
+        btnCapNhatNV = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,6 +145,7 @@ public class Main_Admin extends javax.swing.JFrame {
 
         tfMaNV.setToolTipText("Mã dạng NV1xx");
 
+        tfHoTen.setText("Tủm");
         tfHoTen.setToolTipText("Họ tên của nhân viên");
         tfHoTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,10 +153,18 @@ public class Main_Admin extends javax.swing.JFrame {
             }
         });
 
+        tfSDT.setText("1234567980");
         tfSDT.setToolTipText("SĐT của nhân viên");
 
+        tfLuong.setText("500");
         tfLuong.setToolTipText("Lương cơ bản");
+        tfLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfLuongActionPerformed(evt);
+            }
+        });
 
+        tfPhuCap.setText("50");
         tfPhuCap.setToolTipText("Lương phụ cấp");
 
         cbbPhai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
@@ -163,9 +174,11 @@ public class Main_Admin extends javax.swing.JFrame {
             }
         });
 
-        cbbCapBac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NV Thường", "Giám đốc", "Trưởng phòng" }));
+        cbbCapBac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2" }));
+        cbbCapBac.setToolTipText("0(NV Thường); \n1(Giám đốc); \n2(Trưởng phòng)");
 
-        cbbPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân sự", "Kế toán", "Đề án", "Kinh doanh" }));
+        cbbPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PB001", "PB002", "PB003", "PB004" }));
+        cbbPhong.setToolTipText("PB001( Nhân Sự); \nPB002(Kế Hoạch); \nPB003(Đề Án); \nPB004( Kinh Doanh)"); // NOI18N
         cbbPhong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbbPhongActionPerformed(evt);
@@ -178,6 +191,8 @@ public class Main_Admin extends javax.swing.JFrame {
                 btnThemNVActionPerformed(evt);
             }
         });
+
+        dateNgaySinh.setDateFormatString("dd/MM/yyyy");
 
         jLabel11.setText("Phái:");
 
@@ -300,8 +315,11 @@ public class Main_Admin extends javax.swing.JFrame {
         });
 
         btnThuRole.setText("<<");
-
-        btnCapNhatRoleChoNV.setText("Cập nhật");
+        btnThuRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThuRoleActionPerformed(evt);
+            }
+        });
 
         tableRole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -332,6 +350,13 @@ public class Main_Admin extends javax.swing.JFrame {
 
         jLabel14.setText("Quyền role trên bảng:");
 
+        btnCapNhatNV.setText("Cập nhật NV");
+        btnCapNhatNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatNVActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -342,8 +367,8 @@ public class Main_Admin extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel10)
-                            .addComponent(cbbNhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCapNhatRoleChoNV, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                            .addComponent(cbbNhanVien, 0, 100, Short.MAX_VALUE)
+                            .addComponent(btnCapNhatNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
@@ -354,9 +379,7 @@ public class Main_Admin extends javax.swing.JFrame {
                             .addComponent(btnThuRole))
                         .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel13)
                             .addComponent(jScrollPane3)))
                     .addComponent(jLabel14)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 898, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -378,8 +401,8 @@ public class Main_Admin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cbbNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(btnCapNhatRoleChoNV))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnCapNhatNV))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(12, 12, 12)
@@ -404,7 +427,7 @@ public class Main_Admin extends javax.swing.JFrame {
                 .addGroup(pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnThemNV, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         pnScrollLayout.setVerticalGroup(
             pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,7 +461,7 @@ public class Main_Admin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public void loadInfomation()
+    public void loadUserName()
     {
         DefaultComboBoxModel dcbmodel_NV=new DefaultComboBoxModel();
         dcbmodel_NV.addElement("-----");
@@ -471,20 +494,82 @@ public class Main_Admin extends javax.swing.JFrame {
 
     private void btnThemNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNVActionPerformed
         Nhanvien nv= new Nhanvien();
-        nv.setMaNV(tfMaNV.getText());
+        nv.setMaNV(tfMaNV.getText().toUpperCase());
         nv.setHoTen(tfHoTen.getText());
         nv.setSdt(tfSDT.getText());
-        //nv.setNgaySinh();
         
-        //nv.setPhai(phai);
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String dateFormat = formatter.format(dateNgaySinh.getDate());
+        nv.setNgaySinh(dateFormat);
+        
+        nv.setPhongBan(cbbPhong.getSelectedItem().toString());
+        nv.setPhai(cbbPhai.getSelectedItem().toString());
+        nv.setLuong(tfLuong.getText());
+        nv.setPhuCap(tfPhuCap.getText());
+        nv.setCapBac(cbbCapBac.getSelectedItem().toString());
+        System.out.println(nv.toString());
+        String strGet = "select * from QLDA.NHANVIEN where MANV like ?";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            pstmt.setString(1, nv.getMaNV());
+            ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                // kiểm tra MANV đã tồn tại
+                while (rs.next()) { 
+                    JOptionPane.showMessageDialog(null, "MANV đã tồn tại!.","Thông báo",1);
+                    tfMaNV.requestFocus();
+                    return;
+                }
+            }
+            strGet ="insert into QLDA.NHANVIEN (MANV,HOTEN,PHAI,NGAYSINH,DIENTHOAI,LUONG,PHUCAP,MAPHONG,CAPBAC)VALUES "
+                    + "('"+nv.getMaNV()+"','"
+                    + nv.getHoTen()+"','"
+                    + nv.getPhai()+"',"
+                    + "TO_DATE('"+nv.getNgaySinh()+"','DD/MM/YYYY')"+",'"
+                    + nv.getSdt()+"','"
+                    + nv.getLuong()+"','"
+                    + nv.getPhuCap()+"','"
+                    + nv.getPhongBan()+"','"
+                    + nv.getCapBac()+"')";
+            System.out.println(strGet);
+            
+            pstmt = con.prepareStatement(strGet);
+            pstmt.executeUpdate();
+            
+            strGet="CREATE USER "+nv.getMaNV()+" IDENTIFIED BY "+nv.getMaNV();
+            System.out.println(strGet);
+            pstmt = con.prepareStatement(strGet);
+            pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Thêm NV thành công, vui lòng cấp role.","Thông báo",1);
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi kết nối CSDL.","Thông báo",1);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnThemNVActionPerformed
 
     private void cbbNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNhanVienActionPerformed
         // TODO add your handling code here:
-        String selectedNV= cbbNhanVien.getSelectedItem().toString();
-        if(selectedNV=="-----") return;
-        
         DefaultListModel dlm_RoleCoSan= new DefaultListModel();
+        DefaultListModel dlm_RoleDuocCap= new DefaultListModel();
+        
+        String selectedNV= cbbNhanVien.getSelectedItem().toString();
+        if(selectedNV=="-----"){
+            listRoleCoSan.setModel(dlm_RoleCoSan);
+            listRoleDuocCap.setModel(dlm_RoleDuocCap);
+            Vector clums = new Vector();
+            clums.add("Tên bảng");
+            clums.add("Chủ sở hữu");
+            clums.add("Quyền");
+            Vector data = new Vector();
+            DefaultTableModel dtm_Role = new DefaultTableModel(data, clums);
+            tableRole.setModel(dtm_Role);
+            return;
+        }
+        
+        
         String strGet = "select ROLE from Dba_roles where ROLE like 'ROLE%' order by ROLE";
         try {
             PreparedStatement pstmt = con.prepareStatement(strGet);
@@ -500,7 +585,7 @@ public class Main_Admin extends javax.swing.JFrame {
         listRoleCoSan.setModel(dlm_RoleCoSan);
         
         
-        DefaultListModel dlm_RoleDuocCap= new DefaultListModel();
+        
         strGet = "select granted_role from Dba_role_privs where grantee like ? order by granted_role";
         try {
             PreparedStatement pstmt = con.prepareStatement(strGet);
@@ -590,8 +675,77 @@ public class Main_Admin extends javax.swing.JFrame {
 
     private void btnCapRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapRoleActionPerformed
         // TODO add your handling code here:
-        
+        String value=listRoleCoSan.getSelectedValue();
+        String username=cbbNhanVien.getSelectedItem().toString();
+        if(value !=null && username !=null)
+        {
+            int index=listRoleCoSan.getSelectedIndex();
+            
+            DefaultListModel model1 = (DefaultListModel) listRoleCoSan.getModel();
+            model1.remove(index);
+            listRoleCoSan.setModel(model1);
+            
+            // gọi oracle cấp role
+            String strGet = "grant " + value + " to " + username;
+            try {
+                // cấp role
+                System.out.println(strGet);
+                PreparedStatement pstmt = con.prepareStatement(strGet);
+                ResultSet rs = pstmt.executeQuery();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Xảy ra lỗi truy vấn CSDL, vui lòng thử lại","Thông báo",1);
+                e.printStackTrace();
+                return;
+            }
+            
+            DefaultListModel model2 = (DefaultListModel) listRoleDuocCap.getModel();
+            model2.addElement(value);
+            listRoleDuocCap.setModel(model2);
+            
+            JOptionPane.showMessageDialog(null, "Cấp role thành công","Thông báo",1);
+        }
     }//GEN-LAST:event_btnCapRoleActionPerformed
+
+    private void btnThuRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuRoleActionPerformed
+        // TODO add your handling code here:
+        String value=listRoleDuocCap.getSelectedValue();
+        String username=cbbNhanVien.getSelectedItem().toString();
+        if(value !=null && username!=null)
+        {
+            int index=listRoleDuocCap.getSelectedIndex();
+            DefaultListModel model1 = (DefaultListModel) listRoleDuocCap.getModel();
+            model1.remove(index);
+            listRoleDuocCap.setModel(model1);
+            
+            // gọi oracle thu role
+            String strGet = "revoke " + value + " from " + username;
+            try {
+                // thu ROLE đã cấp
+                System.out.println(strGet);
+                PreparedStatement pstmt = con.prepareStatement(strGet);
+                ResultSet rs = pstmt.executeQuery();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Xảy ra lỗi truy vấn CSDL, vui lòng thử lại","Thông báo",1);
+                e.printStackTrace();
+                return;
+            }
+            
+            DefaultListModel model2 = (DefaultListModel) listRoleCoSan.getModel();
+            model2.addElement(value);
+            listRoleCoSan.setModel(model2);
+            
+            JOptionPane.showMessageDialog(null, "Thu hồi role thành công","Thông báo",1);
+        }
+    }//GEN-LAST:event_btnThuRoleActionPerformed
+
+    private void tfLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLuongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfLuongActionPerformed
+
+    private void btnCapNhatNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNVActionPerformed
+        // TODO add your handling code here:
+        loadUserName();
+    }//GEN-LAST:event_btnCapNhatNVActionPerformed
 
     /**
      * @param args the command line arguments
@@ -630,7 +784,7 @@ public class Main_Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCapNhatRoleChoNV;
+    private javax.swing.JButton btnCapNhatNV;
     private javax.swing.JButton btnCapRole;
     private javax.swing.JButton btnThemNV;
     private javax.swing.JButton btnThuRole;

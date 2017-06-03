@@ -15,14 +15,14 @@ public class Nhanvien {
     String maNV;
     String hoTen;
     String phai;
-    Date ngaySinh;
+    String ngaySinh;
     String sdt;
     String luong;
     String phuCap;
     String phongBan;
     String capBac;
 
-    public Nhanvien(String maNV, String hoTen, String phai, Date ngaySinh, String sdt, String luong, String phuCap, String phongBan, String capBac) {
+    public Nhanvien(String maNV, String hoTen, String phai, String ngaySinh, String sdt, String luong, String phuCap, String phongBan, String capBac) {
         this.maNV = maNV;
         this.hoTen = hoTen;
         this.phai = phai;
@@ -61,11 +61,11 @@ public class Nhanvien {
         this.phai = phai;
     }
 
-    public Date getNgaySinh() {
+    public String getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
+    public void setNgaySinh(String ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 
