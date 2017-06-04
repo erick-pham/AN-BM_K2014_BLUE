@@ -231,9 +231,12 @@ public class Login extends javax.swing.JFrame {
         this.getConnect();
         if(con !=null)
         {
-            Main_Admin main = new Main_Admin(this.getCon());
+//            Main_Admin mainAD = new Main_Admin(this.getCon());
+//            this.show(false);
+//            mainAD.show(true);
+            Main_NV mainNV = new Main_NV(this.getCon());
             this.show(false);
-            main.show(true);
+            mainNV.show(true);
         }
         else
         {

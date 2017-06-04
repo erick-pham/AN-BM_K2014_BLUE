@@ -570,9 +570,10 @@ public class Main_Admin extends javax.swing.JFrame {
         }
         
         
-        String strGet = "select ROLE from Dba_roles where ROLE like 'ROLE%' order by ROLE";
+        String strGet = "select ROLE from Dba_roles where ROLE like 'ROLE%' and ROLE not in (select granted_role from Dba_role_privs where grantee like ?)order by ROLE";
         try {
             PreparedStatement pstmt = con.prepareStatement(strGet);
+            pstmt.setString(1, selectedNV);
             ResultSet rs = pstmt.executeQuery();
             if(rs!=null){
                 while (rs.next()) {                    
@@ -616,7 +617,7 @@ public class Main_Admin extends javax.swing.JFrame {
         if(value != null)
         {
             
-            strGet = "select table_name,owner,privilege from Role_tab_privs where role like ? order by table_name";
+            strGet = "SELECT TABLE_NAME,OWNER,PRIVILEGE FROM ROLE_TAB_PRIVS WHERE ROLE LIKE ? ORDER BY TABLE_NAME";
             try {
                 PreparedStatement pstmt = con.prepareStatement(strGet);
                 pstmt.setString(1, value);
@@ -624,9 +625,9 @@ public class Main_Admin extends javax.swing.JFrame {
                 if(rs!=null){
                     while (rs.next()) {                    
                         Vector row = new Vector();
-                        row.add(rs.getString("table_name"));
-                        row.add(rs.getString("owner"));
-                        row.add(rs.getString("privilege"));
+                        row.add(rs.getString(1));
+                        row.add(rs.getString(2));
+                        row.add(rs.getString(3));
                         data.add(row);
                     }
                 }

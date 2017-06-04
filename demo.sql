@@ -31,3 +31,8 @@ grant role_nv to NV101;
 revoke role_giamdoc from nv101;
 
 select * from User_role_privs;
+
+select * from Dba_col_privs where grantee like 'ROLE_NV';
+
+-- thông tin gán quyền trên cột của role
+select * from Role_tab_privs where role like 'ROLE_TRUONG_PHONG_DEAN';
