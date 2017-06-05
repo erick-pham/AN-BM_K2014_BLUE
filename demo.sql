@@ -36,3 +36,13 @@ select * from Dba_col_privs where grantee like 'ROLE_NV';
 
 -- thông tin gán quyền trên cột của role
 select * from Role_tab_privs where role like 'ROLE_TRUONG_PHONG_DEAN';
+
+-- xem các thông tin đang login của các user
+select * from dba_audit_session;
+
+-- lấy tên session_user hiện tại
+select sys_context('userenv', 'session_user') from dual ;
+
+grant ROLE_NV to NV101;
+
+select * from nhanvien;
