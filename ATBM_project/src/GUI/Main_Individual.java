@@ -5,10 +5,16 @@
  */
 package GUI;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 /**
  *
@@ -32,7 +38,23 @@ public class Main_Individual extends javax.swing.JFrame {
         setTitle("Thông tin cá nhân");
         setResizable(false);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.con=con;
+        this.addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    int hoi = JOptionPane.showConfirmDialog(null, "Bạn dang thao tác, xác nhận thoát (Yes)?",
+                            "Cảnh Báo", JOptionPane.YES_NO_OPTION);
+                    if (hoi == JOptionPane.YES_OPTION) {
+                        try {
+                            con.close();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Main_Admin.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        System.exit(0);
+                    }
+                }
+        });
+        
         init();
         
     }

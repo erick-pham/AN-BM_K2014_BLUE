@@ -6,12 +6,18 @@
 package GUI;
 
 import Entity.Nhanvien;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,8 +36,36 @@ public class Main_NV extends javax.swing.JFrame {
     public Main_NV(Connection con) {
         initComponents();
         this.con=con;
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    int hoi = JOptionPane.showConfirmDialog(null, "Bạn dang thao tác, xác nhận thoát (Yes)?",
+                            "Cảnh Báo", JOptionPane.YES_NO_OPTION);
+                    if (hoi == JOptionPane.YES_OPTION) {
+                        try {
+                            con.close();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Main_Admin.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        System.exit(0);
+                    }
+                }
+        });
+        init();
     }
-
+    public void init(){
+        String type="FALSE";
+        System.out.println("sdf");
+        if(type == "FALSE")
+        {
+            pnSuaNV.setEnabled(false);
+            cbbPhong.setEnabled(false);
+            tfLuong.setEnabled(false);
+            tfPhuCap.setEnabled(false);
+            btnCapNhatNV.setEnabled(false);
+            
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,11 +165,6 @@ public class Main_NV extends javax.swing.JFrame {
         cbbPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PB001", "PB002", "PB003", "PB004" }));
         cbbPhong.setSelectedIndex(3);
         cbbPhong.setToolTipText("PB001( Nhân Sự); \nPB002(Kế Hoạch); \nPB003(Đề Án); \nPB004( Kinh Doanh)"); // NOI18N
-        cbbPhong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbPhongActionPerformed(evt);
-            }
-        });
 
         btnCapNhatNV.setText("Cập nhật nhân viên");
         btnCapNhatNV.addActionListener(new java.awt.event.ActionListener() {
@@ -329,25 +358,23 @@ public class Main_NV extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoadNVActionPerformed
 
-    private void cbbPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbPhongActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbbPhongActionPerformed
-
     private void btnCapNhatNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNVActionPerformed
         int row = tableNV.getSelectedRow();
         if(row>=0)
         {
-            String maNV=tableNV.getValueAt(row, 5).toString();
+            String maNV=tableNV.getValueAt(row, 0).toString();
             String strGet = "UPDATE QLDA.NHANVIEN SET MAPHONG='"
                     + cbbPhong.getSelectedItem().toString()+ "',LUONG='"
                     + tfLuong.getText()+ "',PHUCAP='"
-                    + tfPhuCap.getText()+ "WHERE MANV='"
+                    + tfPhuCap.getText()+ "' WHERE MANV='"
                     + maNV+ "'";
             System.out.println(strGet);
             try {
                 PreparedStatement pstmt = con.prepareStatement(strGet);
-                //ResultSet rs = pstmt.executeQuery();
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Cập nhật thành công.","Thông báo",1);
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi kết nối CSDL.","Thông báo",1);
                 e.printStackTrace();
             }
     }

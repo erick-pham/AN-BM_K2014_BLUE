@@ -291,9 +291,6 @@
                     <Property name="selectedIndex" type="int" value="3"/>
                     <Property name="toolTipText" type="java.lang.String" value="PB001( Nh&#xe2;n S&#x1ef1;); &#xa;PB002(K&#x1ebf; Ho&#x1ea1;ch); &#xa;PB003(&#x110;&#x1ec1; &#xc1;n); &#xa;PB004( Kinh Doanh)" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbPhongActionPerformed"/>
-                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
