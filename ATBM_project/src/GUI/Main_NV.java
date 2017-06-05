@@ -44,7 +44,7 @@ public class Main_NV extends javax.swing.JFrame {
         tpnNhanVien = new javax.swing.JTabbedPane();
         pnNhanVien = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableShowNV = new javax.swing.JTable();
+        tableNV = new javax.swing.JTable();
         btnLoadNV = new javax.swing.JButton();
         pnSuaNV = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -62,7 +62,7 @@ public class Main_NV extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableShowNV.setModel(new javax.swing.table.DefaultTableModel(
+        tableNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -87,23 +87,23 @@ public class Main_NV extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableShowNV.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableNV.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableShowNVMouseClicked(evt);
+                tableNVMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableShowNV);
-        if (tableShowNV.getColumnModel().getColumnCount() > 0) {
-            tableShowNV.getColumnModel().getColumn(0).setResizable(false);
-            tableShowNV.getColumnModel().getColumn(0).setHeaderValue("Mã NV");
-            tableShowNV.getColumnModel().getColumn(1).setHeaderValue("Họ tên");
-            tableShowNV.getColumnModel().getColumn(2).setHeaderValue("Phái");
-            tableShowNV.getColumnModel().getColumn(3).setHeaderValue("Ngày sinh");
-            tableShowNV.getColumnModel().getColumn(4).setHeaderValue("SĐT");
-            tableShowNV.getColumnModel().getColumn(5).setHeaderValue("Lương");
-            tableShowNV.getColumnModel().getColumn(6).setHeaderValue("Phụ cấp");
-            tableShowNV.getColumnModel().getColumn(7).setHeaderValue("Phòng ban");
-            tableShowNV.getColumnModel().getColumn(8).setHeaderValue("Cấp bậc");
+        jScrollPane1.setViewportView(tableNV);
+        if (tableNV.getColumnModel().getColumnCount() > 0) {
+            tableNV.getColumnModel().getColumn(0).setResizable(false);
+            tableNV.getColumnModel().getColumn(0).setHeaderValue("Mã NV");
+            tableNV.getColumnModel().getColumn(1).setHeaderValue("Họ tên");
+            tableNV.getColumnModel().getColumn(2).setHeaderValue("Phái");
+            tableNV.getColumnModel().getColumn(3).setHeaderValue("Ngày sinh");
+            tableNV.getColumnModel().getColumn(4).setHeaderValue("SĐT");
+            tableNV.getColumnModel().getColumn(5).setHeaderValue("Lương");
+            tableNV.getColumnModel().getColumn(6).setHeaderValue("Phụ cấp");
+            tableNV.getColumnModel().getColumn(7).setHeaderValue("Phòng ban");
+            tableNV.getColumnModel().getColumn(8).setHeaderValue("Cấp bậc");
         }
 
         btnLoadNV.setText("Lấy DS Nhân viên");
@@ -326,6 +326,7 @@ public class Main_NV extends javax.swing.JFrame {
         }
         DefaultTableModel dtm_NV= new DefaultTableModel(data, clums);
         tableNV.setModel(dtm_NV);
+        
     }//GEN-LAST:event_btnLoadNVActionPerformed
 
     private void cbbPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbPhongActionPerformed
@@ -333,24 +334,23 @@ public class Main_NV extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbPhongActionPerformed
 
     private void btnCapNhatNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNVActionPerformed
-        int row= tableShowNV.getSelectedRow();
+        int row = tableNV.getSelectedRow();
         if(row>=0)
         {
-             String maNV=tableNV.getValueAt(row, 5).toString();
+            String maNV=tableNV.getValueAt(row, 5).toString();
             String strGet = "UPDATE QLDA.NHANVIEN SET MAPHONG='"
                     + cbbPhong.getSelectedItem().toString()+ "',LUONG='"
                     + tfLuong.getText()+ "',PHUCAP='"
                     + tfPhuCap.getText()+ "WHERE MANV='"
                     + maNV+ "'";
+            System.out.println(strGet);
             try {
                 PreparedStatement pstmt = con.prepareStatement(strGet);
                 //ResultSet rs = pstmt.executeQuery();
-                
-                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+    }
     }//GEN-LAST:event_btnCapNhatNVActionPerformed
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
@@ -359,16 +359,16 @@ public class Main_NV extends javax.swing.JFrame {
         main_invi.show(true);
     }//GEN-LAST:event_jLabel10MouseClicked
 
-    private void tableShowNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableShowNVMouseClicked
+    private void tableNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableNVMouseClicked
         // TODO add your handling code here:
-        int row= tableShowNV.getSelectedRow();
+        int row= tableNV.getSelectedRow();
         if(row>=0)
         {
             tfLuong.setText(tableNV.getValueAt(row, 5).toString());
             tfPhuCap.setText(tableNV.getValueAt(row, 6).toString());
             cbbPhong.setSelectedItem(tableNV.getValueAt(row, 7).toString());
         }
-    }//GEN-LAST:event_tableShowNVMouseClicked
+    }//GEN-LAST:event_tableNVMouseClicked
 
     /**
      * @param args the command line arguments
@@ -428,7 +428,7 @@ public class Main_NV extends javax.swing.JFrame {
     private javax.swing.JPanel pnNhanVien;
     private javax.swing.JPanel pnSuaNV;
     private javax.swing.JPanel pnThamGiaDA;
-    private javax.swing.JTable tableShowNV;
+    private javax.swing.JTable tableNV;
     private javax.swing.JTextField tfLuong;
     private javax.swing.JTextField tfPhuCap;
     private javax.swing.JTabbedPane tpnNhanVien;
