@@ -45,4 +45,7 @@ select sys_context('userenv', 'session_user') from dual ;
 
 grant ROLE_NV to NV101;
 
-select * from nhanvien;
+delete THAMGIADEAN;
+delete dean;
+delete phongban;
+delete nhanvien;

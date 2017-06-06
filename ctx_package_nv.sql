@@ -24,7 +24,7 @@ as
 		as PHONGBAN varchar2(5);
 			begin
 			select MAPHONG into PHONGBAN from QLDA.NHANVIEN where MANV = sys_context('userenv', 'session_user');
-			dbms_session.set_context('NHANVIEN_CTX', 'PHONGBAN', PHONGBAN);
+			dbms_session.set_context('NHANVIEN_CTX', 'GET_PHONGBAN', PHONGBAN);
 		end;
   
 	procedure CHECK_TRUONGPHONG
@@ -86,11 +86,11 @@ as
 		as ISGIAMDOC varchar2(5);
 			begin
 				select case 
-				when exists(select MANV  from QLDA.NHANVIEN where CAPBAC = '1')
+				when exists(select MANV  from QLDA.NHANVIEN where MANV= sys_context('userenv', 'session_user') and CAPBAC = '1')
 				then 'TRUE'
 				else 'FALSE'
 			end into ISGIAMDOC from dual;
-			dbms_session.set_context('NHANVIEN_CTX', 'ISGIAMDOC', ISGIAMDOC);
+			dbms_session.set_context('NHANVIEN_CTX', 'IS_GIAMDOC', ISGIAMDOC);
 		end;
 	
 end;
