@@ -231,12 +231,19 @@ public class Login extends javax.swing.JFrame {
         this.getConnect();
         if(con !=null)
         {
-            Main_Admin mainAD = new Main_Admin(this.getCon());
-            this.show(false);
-            mainAD.show(true);
-//            Main_NV mainNV = new Main_NV(this.getCon());
-//            this.show(false);
-//            mainNV.show(true);
+            if(user.toUpperCase().compareTo("ADMIN_QLDA")==0)
+            {
+                Main_Admin mainAD = new Main_Admin(this.getCon());
+                this.show(false);
+                mainAD.show(true);
+            }
+            
+            if(user.toUpperCase().compareTo("QLDA")==0)
+            {
+                Main_NV mainNV = new Main_NV(this.getCon());
+                this.show(false);
+                mainNV.show(true);
+            }
         }
         else
         {

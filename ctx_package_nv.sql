@@ -35,7 +35,7 @@ as
 				then 'TRUE'
 				else 'FALSE'
 			end into ISTRUONGPB from dual;
-			dbms_session.set_context('NHANVIEN_CTX', 'ISTRUONGPB', ISTRUONGPB);
+			dbms_session.set_context('NHANVIEN_CTX', 'IS_TRUONGPB', ISTRUONGPB);
 		end;
   
 	procedure CHECK_TRUONGPHONG_NHANSU

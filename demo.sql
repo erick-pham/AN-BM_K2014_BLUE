@@ -45,7 +45,10 @@ select sys_context('userenv', 'session_user') from dual ;
 
 grant ROLE_NV to NV101;
 
-delete THAMGIADEAN;
-delete dean;
-delete phongban;
-delete nhanvien;
+select sys_context('NHANVIEN_CTX', 'GET_PHONGBAN') from dual;
+select 'MANV = ''' || sys_context('userenv', 'SESSION_USER') || '''' from dual;
+select * from QLDA.THAMGIADEAN;
+
+delete QLDA.THAMGIADEAN where DEAN='DA001';
+
+update QLDA.THAMGIADEAN set TRANGTHAI='Đã duyệt' where MANV='NV112' and DEAN='DA001';
