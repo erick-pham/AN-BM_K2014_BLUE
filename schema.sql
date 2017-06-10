@@ -55,7 +55,7 @@ CREATE TABLE THAMGIADEAN
 (
   MANV VARCHAR2(5)
 , DEAN VARCHAR2(5)
-, THOIGIAN DATE
+, CHAMCONG VARCHAR2(50)
 , TRANGTHAI VARCHAR2(50)
 , CONSTRAINT PHANCONG_PK PRIMARY KEY(MANV,DEAN)
 );
@@ -106,16 +106,16 @@ insert into DEAN(MADA,NGAYBATDAU,TENDA)VALUES ('DA004',TO_DATE('5/04/2017','DD/M
 insert into DEAN(MADA,NGAYBATDAU,TENDA)VALUES ('DA005',TO_DATE('5/04/2017','DD/MM/YYYY'),'Xây Đê');
 /*data phân công*/
 
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV112','DA001',NULL,'Chưa duyệt');
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV113','DA001',NULL,'Chưa duyệt');                                                                    
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV114','DA002',NULL,'Chưa duyệt');
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV115','DA002',NULL,'Chưa duyệt');                                                                       
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV113','DA003',NULL,'Chưa duyệt');
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV114','DA003',NULL,'Chưa duyệt');                                                                        
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV112','DA004',NULL,'Chưa duyệt');
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV115','DA004',NULL,'Chưa duyệt');
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV114','DA005',NULL,'Chưa duyệt');
-insert into THAMGIADEAN (MANV,DEAN,THOIGIAN,TRANGTHAI)VALUES ('NV113','DA005',NULL,'Chưa duyệt');
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV112','DA001',NULL,'Chưa duyệt');
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV113','DA001',NULL,'Chưa duyệt');                                                                    
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV114','DA002',NULL,'Chưa duyệt');
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV115','DA002',NULL,'Chưa duyệt');                                                                       
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV113','DA003',NULL,'Chưa duyệt');
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV114','DA003',NULL,'Chưa duyệt');                                                                        
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV112','DA004',NULL,'Chưa duyệt');
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV115','DA004',NULL,'Chưa duyệt');
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV114','DA005',NULL,'Chưa duyệt');
+insert into THAMGIADEAN (MANV,DEAN,CHAMCONG,TRANGTHAI)VALUES ('NV113','DA005',NULL,'Chưa duyệt');
 
 
 update PHONGBAN set TRUONGPHONG='NV101' where MAPHONG='PB001';

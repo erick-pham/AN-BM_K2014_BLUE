@@ -122,6 +122,14 @@ public class Main_Admin extends javax.swing.JFrame {
         tableRole = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         btnCapNhatNV = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        btnLoadNV = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tableNV = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        btnLoadPB = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tablePB = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -344,16 +352,7 @@ public class Main_Admin extends javax.swing.JFrame {
 
         tableRole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Tên bảng", "Sở hữu", "Quyền"
@@ -435,7 +434,106 @@ public class Main_Admin extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Xem nhân viên"));
+
+        btnLoadNV.setText("Lấy DS NV");
+        btnLoadNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadNVActionPerformed(evt);
+            }
+        });
+
+        tableNV.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã NV", "Họ tên", "Phòng ban", "Cấp bậc"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(tableNV);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLoadNV)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLoadNV)
+                .addContainerGap(110, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Xem phòng ban"));
+
+        btnLoadPB.setText("Lấy DS PB");
+        btnLoadPB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadPBActionPerformed(evt);
+            }
+        });
+
+        tablePB.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã phòng", "Tên phòng", "Trưởng phòng", "Ngày nhận chức"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(tablePB);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLoadPB)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnLoadPB)
+                        .addGap(0, 84, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -445,19 +543,29 @@ public class Main_Admin extends javax.swing.JFrame {
             pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnScrollLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnThemNV, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGroup(pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnScrollLayout.createSequentialGroup()
+                        .addGroup(pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pnThemNV, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnScrollLayout.setVerticalGroup(
             pnScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnScrollLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnThemNV, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jScrollPane2.setViewportView(pnScroll);
@@ -467,7 +575,7 @@ public class Main_Admin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnHello, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,8 +583,7 @@ public class Main_Admin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnHello, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
         );
 
         pack();
@@ -769,6 +876,70 @@ public class Main_Admin extends javax.swing.JFrame {
         loadUserName();
     }//GEN-LAST:event_btnCapNhatNVActionPerformed
 
+    private void btnLoadNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadNVActionPerformed
+        // TODO add your handling code here:
+        Vector clums = new Vector();
+        clums.add("Mã NV");
+        clums.add("Họ tên");
+        clums.add("Phòng ban");
+        clums.add("Cấp bậc");
+        Vector data = new Vector();
+        
+        String strGet; 
+        strGet = "select MANV,HOTEN,MAPHONG,CAPBAC from QLDA.NHANVIEN";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                while (rs.next()) {                    
+                    Vector row = new Vector();
+                    row.add(rs.getString(1));
+                    row.add(rs.getString(2));
+                    row.add(rs.getString(3));
+                    row.add(rs.getString(4));
+                    data.add(row);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!.","Thông báo",1);
+            e.printStackTrace();
+        }
+        DefaultTableModel dtm_Role= new DefaultTableModel(data, clums);
+        tableNV.setModel(dtm_Role);
+    }//GEN-LAST:event_btnLoadNVActionPerformed
+
+    private void btnLoadPBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadPBActionPerformed
+        // TODO add your handling code here:
+        Vector clums = new Vector();
+        clums.add("Mã phòng");
+        clums.add("Tên phòng");
+        clums.add("Trưởng phòng");
+        clums.add("Ngày nhận chức");
+        Vector data = new Vector();
+        
+        String strGet; 
+        strGet = "select MAPHONG,TENPHONG,TRUONGPHONG,NGAYNHANCHUC from QLDA.PHONGBAN";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                while (rs.next()) {                    
+                    Vector row = new Vector();
+                    row.add(rs.getString(1));
+                    row.add(rs.getString(2));
+                    row.add(rs.getString(3));
+                    row.add(rs.getDate(4));
+                    data.add(row);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!.","Thông báo",1);
+            e.printStackTrace();
+        }
+        DefaultTableModel dtm_Role= new DefaultTableModel(data, clums);
+        tablePB.setModel(dtm_Role);
+    }//GEN-LAST:event_btnLoadPBActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -808,6 +979,8 @@ public class Main_Admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhatNV;
     private javax.swing.JButton btnCapRole;
+    private javax.swing.JButton btnLoadNV;
+    private javax.swing.JButton btnLoadPB;
     private javax.swing.JButton btnThemNV;
     private javax.swing.JButton btnThuRole;
     private javax.swing.JComboBox<String> cbbCapBac;
@@ -830,15 +1003,21 @@ public class Main_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JList<String> listRoleCoSan;
     private javax.swing.JList<String> listRoleDuocCap;
     private javax.swing.JPanel pnHello;
     private javax.swing.JPanel pnScroll;
     private javax.swing.JPanel pnThemNV;
+    private javax.swing.JTable tableNV;
+    private javax.swing.JTable tablePB;
     private javax.swing.JTable tableRole;
     private javax.swing.JTextField tfHoTen;
     private javax.swing.JTextField tfLuong;
