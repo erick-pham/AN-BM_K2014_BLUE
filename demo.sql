@@ -16,25 +16,42 @@ select * from Dba_role_privs where grantee like 'NV101';
 -- hiển thị các quyền được cấp trên bảng của các role
 select * from Role_tab_privs where role like 'ROLE%';
 
+-- các user và role của họ
+select * from Dba_role_privs where Dba_role_privs.grantee like 'NV%';
+
+-- quyền mức cột của user NV101 dựa trên role
+select distinct grantee,table_name,column_name,privilege from Role_tab_privs,Dba_role_privs where granted_role like ROLE and grantee like 'NV101' order by table_name,column_name,privilege ASC;
+
+-- danh sách các role có trong hệ thống
 select * from Dba_roles;
-select * from Dba_role_privs;
+
+
+-- quyền của role trên bảng
 select * from Role_tab_privs;
+
+-- các role được gán cho user session
+select * from User_role_privs;
+
+-- quyền object của user session
 select * from User_tab_privs;
+
+-- quyền trên col của user session
+select * from User_col_privs;
+
+
 select * from Dba_profiles;
-select * from User_tab_privs;
+
 select * from dba_role_privs where grantee = 'NV101';
-select * from User_tab_privs where grantee = 'NV101';
-select * from User_role_privs where grantee = 'NV101';
+
 
 grant role_nv to NV101;
 
 revoke role_giamdoc from nv101;
 
-select * from User_role_privs;
-
+-- thông tin quyền hệ thống mức cột của user session
 select * from Dba_col_privs where grantee like 'ROLE_NV';
 
--- thông tin gán quyền trên cột của role
+-- quyền của role mức cột của bảng
 select * from Role_tab_privs where role like 'ROLE_TRUONG_PHONG_DEAN';
 
 -- xem các thông tin đang login của các user
@@ -42,8 +59,8 @@ select * from dba_audit_session;
 
 -- lấy tên session_user hiện tại
 select sys_context('userenv', 'session_user') from dual ;
-
-grant ROLE_NV to NV101;
+select sys_context('userenv', 'ISDBA') from dual;
+grant ROLE_NV to NV105;
 
 select sys_context('NHANVIEN_CTX', 'GET_PHONGBAN') from dual;
 select 'MANV = ''' || sys_context('userenv', 'SESSION_USER') || '''' from dual;

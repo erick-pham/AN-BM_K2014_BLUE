@@ -36,6 +36,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
         setTitle("Đăng nhập");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
        
@@ -228,17 +229,20 @@ public class Login extends javax.swing.JFrame {
         
         URL = "jdbc:oracle:thin:@"+host+":"+port+":"+dbName;
         System.out.println(URL);
+        
         this.getConnect();
         if(con !=null)
         {
-            if(user.toUpperCase().compareTo("ADMIN_QLDA")==0)
+            if(user.toUpperCase().compareTo("QLDA")==0)
             {
-                Main_Admin mainAD = new Main_Admin(this.getCon());
+                //Main_Admin mainAD = new Main_Admin(this.getCon());
+                Main_AD mainAD = new Main_AD(this.getCon());
                 this.show(false);
                 mainAD.show(true);
             }
             
-            if(user.toUpperCase().compareTo("QLDA")==0)
+            // nếu user bắt đầu là NV thì mở trang nhân viên
+            if(user.toUpperCase().startsWith("NV"))
             {
                 Main_NV mainNV = new Main_NV(this.getCon());
                 this.show(false);
@@ -248,8 +252,8 @@ public class Login extends javax.swing.JFrame {
         else
         {
             JOptionPane.showMessageDialog(null, "Kết nối không thành công, kiểm tra lại user/pass hoặc thông tin kết nối","Thông báo",1);
+            return;
         }
-        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
