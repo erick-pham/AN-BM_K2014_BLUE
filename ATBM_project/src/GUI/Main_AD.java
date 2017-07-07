@@ -93,11 +93,69 @@ public class Main_AD extends javax.swing.JFrame {
         }
         cbbNhanVien.setModel(dcbmodel_NV);
     }
+    public void loadRolePrivs2(String roleName)
+    {
+        Vector clums = new Vector();
+        clums.add("Tên bảng");
+        clums.add("Tên cột");
+        clums.add("Quyền hạn");
+        Vector data = new Vector();
+        String strGet = "SELECT TABLE_NAME,COLUMN_NAME,PRIVILEGE FROM ROLE_TAB_PRIVS WHERE ROLE LIKE ? ORDER BY TABLE_NAME,COLUMN_NAME,PRIVILEGE";
+        try {
+                PreparedStatement pstmt = con.prepareStatement(strGet);
+                pstmt.setString(1, roleName);
+                ResultSet rs = pstmt.executeQuery();
+                if(rs!=null){
+                    while (rs.next()) {
+                        Vector row = new Vector();
+                        row.add(rs.getString(1));
+                        row.add(rs.getString(2));
+                        row.add(rs.getString(3));
+                        data.add(row);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+        }
+        DefaultTableModel dtm_Role= new DefaultTableModel(data, clums);
+        tableRole2.setModel(dtm_Role);
+    }
+    
+    public void loadRolePrivs1(String nameRole)
+    {
+        Vector clums = new Vector();
+        clums.add("Tên bảng");
+        clums.add("Tên cột");
+        clums.add("Quyền hạn");
+        Vector data = new Vector();
+
+        String strGet= "select table_name,column_name,privilege from Role_tab_privs where role like ? order by table_name,column_name,privilege";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            pstmt.setString(1, nameRole);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                while (rs.next()) {
+                    Vector row = new Vector();
+                    row.add(rs.getString(1));
+                    row.add(rs.getString(2));
+                    row.add(rs.getString(3));
+                    data.add(row);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DefaultTableModel dtm_Role= new DefaultTableModel(data, clums);
+        tableRole1.setModel(dtm_Role);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -123,7 +181,6 @@ public class Main_AD extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         cbbNhanVien = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listRoleCoSan = new javax.swing.JList<>();
         jLabel12 = new javax.swing.JLabel();
@@ -133,9 +190,30 @@ public class Main_AD extends javax.swing.JFrame {
         btnCapRole = new javax.swing.JButton();
         btnThuRole = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tableRole = new javax.swing.JTable();
+        tableRole1 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         btnCapNhatNV = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        tfNhanNV = new javax.swing.JTextField();
+        btnCapNhatNhan = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        tfNewRole = new javax.swing.JTextField();
+        btnThemRole = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        cbbListRole = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        cbbListTable = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
+        cbbListPrivs = new javax.swing.JComboBox<>();
+        btnPhanQuyenRole = new javax.swing.JButton();
+        btnLayThongTin = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tableRole2 = new javax.swing.JTable();
+        jLabel20 = new javax.swing.JLabel();
+        cbbListColumn = new javax.swing.JComboBox<>();
+        jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnLoadNV = new javax.swing.JButton();
@@ -144,6 +222,10 @@ public class Main_AD extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablePrivs = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane6.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -237,17 +319,17 @@ public class Main_AD extends javax.swing.JFrame {
                 .addGroup(pnThemNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tfMaNV)
                     .addComponent(cbbPhai, 0, 89, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(pnThemNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnThemNVLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tfHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnThemNVLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(dateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(pnThemNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(pnThemNVLayout.createSequentialGroup()
                         .addComponent(jLabel8)
@@ -266,14 +348,14 @@ public class Main_AD extends javax.swing.JFrame {
                 .addGroup(pnThemNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbbCapBac, 0, 97, Short.MAX_VALUE)
                     .addComponent(tfLuong))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(pnThemNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnThemNVLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfPhuCap, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnThemNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         pnThemNVLayout.setVerticalGroup(
             pnThemNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +388,7 @@ public class Main_AD extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Phân role"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Phân quyền"));
 
         cbbNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----", "NV101", "NV102", "NV103" }));
         cbbNhanVien.addActionListener(new java.awt.event.ActionListener() {
@@ -314,8 +396,6 @@ public class Main_AD extends javax.swing.JFrame {
                 cbbNhanVienActionPerformed(evt);
             }
         });
-
-        jLabel10.setText("Chọn nhân viên:");
 
         listRoleCoSan.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -349,7 +429,7 @@ public class Main_AD extends javax.swing.JFrame {
             }
         });
 
-        tableRole.setModel(new javax.swing.table.DefaultTableModel(
+        tableRole1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -365,14 +445,25 @@ public class Main_AD extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(tableRole);
+        jScrollPane4.setViewportView(tableRole1);
 
         jLabel14.setText("Quyền role trên bảng:");
 
-        btnCapNhatNV.setText("Cập nhật NV");
+        btnCapNhatNV.setText("Lấy danh sách");
         btnCapNhatNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCapNhatNVActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Giá trị nhãn:");
+
+        tfNhanNV.setText("0");
+
+        btnCapNhatNhan.setText("Cập nhật nhãn");
+        btnCapNhatNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatNhanActionPerformed(evt);
             }
         });
 
@@ -383,57 +474,61 @@ public class Main_AD extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
+                    .addComponent(jLabel14)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbbNhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCapNhatNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCapNhatNhan, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNhanNV, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(72, 72, 72)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel10)
-                                    .addComponent(cbbNhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCapNhatNV, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnCapRole)
-                                    .addComponent(btnThuRole))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel14))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(btnThuRole)))
+                            .addComponent(jLabel12))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(btnCapRole)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnThuRole)
+                                .addGap(15, 15, 15))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnCapNhatNV)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbbNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel13)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel12)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(cbbNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnCapNhatNV))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGap(13, 13, 13)
-                            .addComponent(btnCapRole)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnThuRole)
-                            .addGap(13, 13, 13))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(tfNhanNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCapNhatNhan)))
                 .addGap(7, 7, 7)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -447,21 +542,190 @@ public class Main_AD extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnThemNV, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnThemNV, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addComponent(pnThemNV, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("QL Nhân Viên", jPanel1);
+
+        jLabel16.setText("Tên role:");
+
+        tfNewRole.setText("ROLE_");
+
+        btnThemRole.setText("Thêm Role");
+        btnThemRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemRoleActionPerformed(evt);
+            }
+        });
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Phân quyền cho role"));
+
+        cbbListRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbListRoleActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Tên role:");
+
+        jLabel18.setText("Tên Bảng:");
+
+        cbbListTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbListTableActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setText("Quyền:");
+
+        cbbListPrivs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Insert", "Select", "Update", "Delete" }));
+
+        btnPhanQuyenRole.setText("Phân quyền");
+        btnPhanQuyenRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPhanQuyenRoleActionPerformed(evt);
+            }
+        });
+
+        btnLayThongTin.setText("Load dữ liệu");
+        btnLayThongTin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLayThongTinActionPerformed(evt);
+            }
+        });
+
+        tableRole2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tên bảng", "Tên cột", "Quyền"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(tableRole2);
+
+        jLabel20.setText("Tên cột:");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(btnLayThongTin)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbbListRole, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbbListTable, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel20))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(cbbListPrivs, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbListColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPhanQuyenRole)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel20))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbbListRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbListTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLayThongTin)
+                    .addComponent(cbbListColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbListPrivs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPhanQuyenRole))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfNewRole, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(btnThemRole)
+                        .addGap(0, 596, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(tfNewRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThemRole))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(163, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("QL Role", jPanel5);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1005, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("QL Table", jPanel6);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Xem nhân viên"));
 
@@ -522,7 +786,7 @@ public class Main_AD extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
                     .addComponent(jScrollPane5)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,11 +832,11 @@ public class Main_AD extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1004, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1009, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -676,7 +940,7 @@ public class Main_AD extends javax.swing.JFrame {
             clums.add("Quyền");
             Vector data = new Vector();
             DefaultTableModel dtm_Role = new DefaultTableModel(data, clums);
-            tableRole.setModel(dtm_Role);
+            tableRole1.setModel(dtm_Role);
             return;
         }
 
@@ -709,76 +973,38 @@ public class Main_AD extends javax.swing.JFrame {
             e.printStackTrace();
         }
         listRoleDuocCap.setModel(dlm_RoleDuocCap);
+        
+        strGet = "select OLS_COLUMN from NHANVIEN where MANV like ?";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            pstmt.setString(1, selectedNV);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                while (rs.next()) {
+                    tfNhanNV.setText(rs.getString(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_cbbNhanVienActionPerformed
 
     private void listRoleCoSanValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listRoleCoSanValueChanged
         // TODO add your handling code here:
-
-        Vector clums = new Vector();
-        clums.add("Tên bảng");
-        clums.add("Tên cột");
-        clums.add("Quyền hạn");
-        Vector data = new Vector();
-
-        String strGet;
         String value = listRoleCoSan.getSelectedValue();
         if(value != null)
         {
-
-            strGet = "SELECT TABLE_NAME,COLUMN_NAME,PRIVILEGE FROM ROLE_TAB_PRIVS WHERE ROLE LIKE ? ORDER BY TABLE_NAME,COLUMN_NAME,PRIVILEGE";
-            try {
-                PreparedStatement pstmt = con.prepareStatement(strGet);
-                pstmt.setString(1, value);
-                ResultSet rs = pstmt.executeQuery();
-                if(rs!=null){
-                    while (rs.next()) {
-                        Vector row = new Vector();
-                        row.add(rs.getString(1));
-                        row.add(rs.getString(2));
-                        row.add(rs.getString(3));
-                        data.add(row);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            DefaultTableModel dtm_Role= new DefaultTableModel(data, clums);
-            tableRole.setModel(dtm_Role);
+            loadRolePrivs1(value);
         }
     }//GEN-LAST:event_listRoleCoSanValueChanged
 
     private void listRoleDuocCapValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listRoleDuocCapValueChanged
         // TODO add your handling code here:
-        Vector clums = new Vector();
-        clums.add("Tên bảng");
-        clums.add("Tên cột");
-        clums.add("Quyền hạn");
-        Vector data = new Vector();
-
-        String strGet;
         String value= listRoleDuocCap.getSelectedValue();
         if(value != null)
         {
-
-            strGet = "select table_name,column_name,privilege from Role_tab_privs where role like ? order by table_name,column_name,privilege";
-            try {
-                PreparedStatement pstmt = con.prepareStatement(strGet);
-                pstmt.setString(1, value);
-                ResultSet rs = pstmt.executeQuery();
-                if(rs!=null){
-                    while (rs.next()) {
-                        Vector row = new Vector();
-                        row.add(rs.getString(1));
-                        row.add(rs.getString(2));
-                        row.add(rs.getString(3));
-                        data.add(row);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            DefaultTableModel dtm_Role= new DefaultTableModel(data, clums);
-            tableRole.setModel(dtm_Role);
+            loadRolePrivs1(value);
         }
     }//GEN-LAST:event_listRoleDuocCapValueChanged
 
@@ -924,6 +1150,140 @@ public class Main_AD extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tableNVMouseClicked
 
+    private void btnCapNhatNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNhanActionPerformed
+        // TODO add your handling code here:
+        String selectedNV= cbbNhanVien.getSelectedItem().toString();
+        int label = Integer.valueOf(tfNhanNV.getText());
+        try {
+            String strGet ="{CALL SA_USER_ADMIN.SET_LEVELS ('OLS_NHANVIEN', '"
+                    + selectedNV + "', LABEL_TO_CHAR("
+                    + label +"))}";
+            System.out.println(strGet);
+            PreparedStatement pstmt = con.prepareCall(strGet);
+            pstmt.execute();
+            JOptionPane.showMessageDialog(null, "Cập nhật nhãn thành công.","Thông báo",1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi kết nối CSDL.","Thông báo",1);
+            e.printStackTrace();
+        } 
+    }//GEN-LAST:event_btnCapNhatNhanActionPerformed
+
+    private void btnThemRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemRoleActionPerformed
+        // TODO add your handling code here:
+        if(!tfNewRole.getText().toUpperCase().startsWith("NV")){
+            JOptionPane.showMessageDialog(null, "Tên role phải bắt đầu là ROLE_.","Thông báo",1);
+            return;
+        }
+        try {
+            String strGet ="create role "+tfNewRole.getText();
+            System.out.println(strGet);
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            pstmt.execute();
+            JOptionPane.showMessageDialog(null, "Thêm role thành công.","Thông báo",1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi kết nối CSDL.","Thông báo",1);
+            e.printStackTrace();
+        } 
+    }//GEN-LAST:event_btnThemRoleActionPerformed
+
+    private void btnLayThongTinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLayThongTinActionPerformed
+        // TODO add your handling code here:
+        DefaultComboBoxModel dcbm_Role= new DefaultComboBoxModel();
+        DefaultComboBoxModel dcbm_Table= new DefaultComboBoxModel();
+        try {
+            String strGet ="select Role from Dba_roles where ROLE like 'ROLE_%'";
+            System.out.println(strGet);
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                    while (rs.next()) {
+                        dcbm_Role.addElement(rs.getString(1));
+                    }
+                }
+            
+            strGet ="select distinct table_name from user_tab_columns";
+            System.out.println(strGet);
+            pstmt = con.prepareStatement(strGet);
+            rs = pstmt.executeQuery();
+            if(rs!=null){
+                    while (rs.next()) {
+                        dcbm_Table.addElement(rs.getString(1));
+                    }
+                }
+            cbbListRole.setModel(dcbm_Role);
+            cbbListTable.setModel(dcbm_Table);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi kết nối CSDL.","Thông báo",1);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnLayThongTinActionPerformed
+
+    private void cbbListRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbListRoleActionPerformed
+        // TODO add your handling code here:
+        int index = cbbListRole.getSelectedIndex();
+        if (index>=0)
+        {
+            String roleName= cbbListRole.getItemAt(index);
+            System.out.println(roleName);
+            loadRolePrivs2(roleName);
+        }
+    }//GEN-LAST:event_cbbListRoleActionPerformed
+
+    private void btnPhanQuyenRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanQuyenRoleActionPerformed
+        // TODO add your handling code here:
+        int indexRole = cbbListRole.getSelectedIndex();
+        int indexTable = cbbListTable.getSelectedIndex();
+        int indexColumn = cbbListColumn.getSelectedIndex();
+        int indexPrivs = cbbListPrivs.getSelectedIndex();
+        if (indexRole>=0 && indexTable>=0 && indexPrivs>=0 && indexColumn>=0)
+        {
+            String roleName= cbbListRole.getItemAt(indexRole);
+            String tableName= cbbListTable.getItemAt(indexTable);
+            String columnName= cbbListColumn.getItemAt(indexColumn);
+            String privsName= cbbListPrivs.getItemAt(indexPrivs);
+            String strGet ;
+            if(privsName.toUpperCase().equals("INSERT") || privsName.toUpperCase().equals("UPDATE"))
+            {
+                strGet = "grant "+privsName+"("+ columnName +") on " + tableName + " to " + roleName;
+            }
+            else
+            {
+                strGet = "grant "+privsName+" on " + tableName + " to " + roleName;
+            }
+            System.out.println(strGet);
+            try {
+                    PreparedStatement pstmt = con.prepareStatement(strGet);
+                    pstmt.executeUpdate();
+                } catch (Exception e) {
+                    e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnPhanQuyenRoleActionPerformed
+
+    private void cbbListTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbListTableActionPerformed
+        // TODO add your handling code here:
+        DefaultComboBoxModel dcbm_column= new DefaultComboBoxModel();
+        int indexTable = cbbListTable.getSelectedIndex();
+        if ( indexTable>=0)
+        {
+            String tableName= cbbListTable.getItemAt(indexTable);
+            String strGet = "select column_name from user_tab_columns where table_name like '" +tableName+ "'";
+            System.out.println(strGet);
+            try {
+                    PreparedStatement pstmt = con.prepareStatement(strGet);
+                    ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                    while (rs.next()) {
+                        dcbm_column.addElement(rs.getString(1));
+                    }
+                }
+                } catch (Exception e) {
+                    e.printStackTrace();
+            }
+            cbbListColumn.setModel(dcbm_column);
+        }
+    }//GEN-LAST:event_cbbListTableActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -962,11 +1322,19 @@ public class Main_AD extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhatNV;
+    private javax.swing.JButton btnCapNhatNhan;
     private javax.swing.JButton btnCapRole;
+    private javax.swing.JButton btnLayThongTin;
     private javax.swing.JButton btnLoadNV;
+    private javax.swing.JButton btnPhanQuyenRole;
     private javax.swing.JButton btnThemNV;
+    private javax.swing.JButton btnThemRole;
     private javax.swing.JButton btnThuRole;
     private javax.swing.JComboBox<String> cbbCapBac;
+    private javax.swing.JComboBox<String> cbbListColumn;
+    private javax.swing.JComboBox<String> cbbListPrivs;
+    private javax.swing.JComboBox<String> cbbListRole;
+    private javax.swing.JComboBox<String> cbbListTable;
     private javax.swing.JComboBox<String> cbbNhanVien;
     private javax.swing.JComboBox<String> cbbPhai;
     private javax.swing.JComboBox<String> cbbPhong;
@@ -978,7 +1346,12 @@ public class Main_AD extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -990,22 +1363,31 @@ public class Main_AD extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JList<String> listRoleCoSan;
     private javax.swing.JList<String> listRoleDuocCap;
     private javax.swing.JPanel pnThemNV;
     private javax.swing.JTable tableNV;
     private javax.swing.JTable tablePrivs;
-    private javax.swing.JTable tableRole;
+    private javax.swing.JTable tableRole1;
+    private javax.swing.JTable tableRole2;
     private javax.swing.JTextField tfHoTen;
     private javax.swing.JTextField tfLuong;
     private javax.swing.JTextField tfMaNV;
+    private javax.swing.JTextField tfNewRole;
+    private javax.swing.JTextField tfNhanNV;
     private javax.swing.JTextField tfPhuCap;
     private javax.swing.JTextField tfSDT;
     // End of variables declaration//GEN-END:variables

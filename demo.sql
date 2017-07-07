@@ -7,14 +7,14 @@ select * from QLDA.DEAN;
 select username from DBA_users where username like 'NV%' ORDER BY username;
 grant select on QLDA.Nhanvien to NV101;
 
--- hiển thị các role có trong CSDL do DLDE tạo ra
+-- hiển thị các role có trong CSDL do QLDA tạo ra
 select * from Dba_roles where ROLE like 'ROLE%';
 
 -- hiển thị các role mà NV101 được cấp
 select * from Dba_role_privs where grantee like 'NV101';
 
 -- hiển thị các quyền được cấp trên bảng của các role
-select * from Role_tab_privs where role like 'ROLE%';
+select * from Role_tab_privs where role like 'ROLE_%';
 
 -- các user và role của họ
 select * from Dba_role_privs where Dba_role_privs.grantee like 'NV%';
@@ -69,3 +69,27 @@ select * from QLDA.THAMGIADEAN;
 delete QLDA.THAMGIADEAN where DEAN='DA001';
 
 update QLDA.THAMGIADEAN set TRANGTHAI='Đã duyệt' where MANV='NV112' and DEAN='DA001';
+
+select * from qlda.nhanvien;
+
+-- lấy ds user trong QLDE (NV100 ->)
+select username from DBA_users where username like 'NV%' ORDER BY username;
+-- hiển thị các role có trong CSDL do QLDA tạo ra
+select * from Dba_roles where ROLE like 'ROLE_%';
+-- lấy ds table của do QLDA sở hữu
+select * from user_tab_columns;
+select column_name from user_tab_columns where table_name like DEAN;
+
+-- lấy ds table của do QLDA sở hữu
+select * from user_views;
+
+
+SELECT table_name, owner, tablespace_name FROM all_tables where owner like 'QLDA';
+SELECT * FROM all_role;
+
+SELECT object_id, object_name FROM USER_OBJECTS where object_type like 'TABLE';
+SELECT view_name FROM all_views;
+
+select * from user_source;
+grant Select(MAPHONG) ON PHONGBAN to ROLE_GIAMDOC;
+GRANT update(MAPHONG) ON PHONGBAN TO ROLE_GIAMDOC;

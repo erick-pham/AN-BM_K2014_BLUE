@@ -203,8 +203,9 @@ public class Main_Admin extends javax.swing.JFrame {
             }
         });
 
-        cbbCapBac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2" }));
-        cbbCapBac.setToolTipText("0(NV Thường); \n1(Giám đốc); \n2(Trưởng phòng)");
+        cbbCapBac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+        cbbCapBac.setSelectedIndex(2);
+        cbbCapBac.setToolTipText("1(Giám đốc); \n2(Trưởng phòng);\n3(NV Thường);");
 
         cbbPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PB001", "PB002", "PB003", "PB004" }));
         cbbPhong.setToolTipText("PB001( Nhân Sự); \nPB002(Kế Hoạch); \nPB003(Đề Án); \nPB004( Kinh Doanh)"); // NOI18N
