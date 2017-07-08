@@ -16,7 +16,7 @@ begin
 		then
 			return ''; 
 	end if;
-	-- nếu session là trưởng phòng or giám đốc thì trả các nv thuộc cùng phòng với session
+	-- nếu user session là các trưởng phòng
 	if sys_context('NHANVIEN_CTX', 'IS_TRUONGPB') = 'TRUE'
 		then
 			PHONGBAN := sys_context('NHANVIEN_CTX', 'GET_PHONGBAN');
@@ -37,7 +37,6 @@ begin dbms_rls.add_policy(
     policy_function => 'FUNC_SELECT_TABLE_NV',
 	statement_types => 'select');
 end;
-
 
 --drop POLICY_SELECT_TABLE_NV
 /*
@@ -61,7 +60,7 @@ as
   SL NUMBER;
   IJ NUMBER;
 begin
-    -- xét tuần khối lượng kết quả trả về
+    -- xét từng khối lượng kết quả trả về
 	-- nếu session là DBA thì cho phép toàn bộ
 	if sys_context('userenv', 'SESSION_USER') = 'SYSTEM'
 		or sys_context('userenv', 'SESSION_USER') = 'QLDA'

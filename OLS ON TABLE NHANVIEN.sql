@@ -29,12 +29,6 @@ EXEC SA_USER_ADMIN.SET_LEVELS ('OLS_NHANVIEN', 'NV101', LABEL_TO_CHAR(20));
 EXEC SA_USER_ADMIN.SET_LEVELS ('OLS_NHANVIEN', 'NV101', LABEL_TO_CHAR(20));
 exec SA_USER_ADMIN.SET_LEVELS('OLS_NHANVIEN', 'NV101', LABEL_TO_CHAR(20));
 
-create or replace procedure set_label (label_value int, user_name in varchar2)
-as
-  TEMP varchar2(200);
-begin
-    EXEC SA_USER_ADMIN.SET_LEVELS('OLS_NHANVIEN', user_name, LABEL_TO_CHAR(label_value));
-end
 
 
 

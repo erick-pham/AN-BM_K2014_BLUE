@@ -36,6 +36,8 @@ public class Main_NV extends javax.swing.JFrame {
     public Main_NV(Connection con) {
         initComponents();
         this.con=con;
+        setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
@@ -259,7 +261,7 @@ public class Main_NV extends javax.swing.JFrame {
         );
         pnDeAnLayout.setVerticalGroup(
             pnDeAnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addGap(0, 233, Short.MAX_VALUE)
         );
 
         tpnNhanVien.addTab("Đề án", pnDeAn);
@@ -326,7 +328,7 @@ public class Main_NV extends javax.swing.JFrame {
                     .addComponent(tfTinhTrangTGDA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnCapNhatTGDA)
-                .addGap(0, 51, Short.MAX_VALUE))
+                .addGap(0, 61, Short.MAX_VALUE))
         );
 
         btnHuyTGDA.setText("Hủy tham gia");
@@ -388,9 +390,9 @@ public class Main_NV extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tpnNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(tpnNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

@@ -65,7 +65,7 @@ public class Main_AD extends javax.swing.JFrame {
         setTitle("QUẢN LÝ DỰ ÁN");
         setLocationRelativeTo(null);
         setResizable(false);
-                dateNgaySinh.setDate(Calendar.getInstance().getTime());
+        dateNgaySinh.setDate(Calendar.getInstance().getTime());
     }
 
     
@@ -93,8 +93,14 @@ public class Main_AD extends javax.swing.JFrame {
         }
         cbbNhanVien.setModel(dcbmodel_NV);
     }
-    public void loadRolePrivs2(String roleName)
+    public void loadRolePrivs2()
     {
+        int index = cbbListRole.getSelectedIndex();
+        if (index<0)
+        {
+            return;
+        }
+        String roleName= cbbListRole.getItemAt(index);
         Vector clums = new Vector();
         clums.add("Tên bảng");
         clums.add("Tên cột");
@@ -109,7 +115,10 @@ public class Main_AD extends javax.swing.JFrame {
                     while (rs.next()) {
                         Vector row = new Vector();
                         row.add(rs.getString(1));
-                        row.add(rs.getString(2));
+                        if(rs.getString(2) != null)
+                            row.add(rs.getString(2));
+                        else
+                            row.add("All");
                         row.add(rs.getString(3));
                         data.add(row);
                     }
@@ -156,6 +165,8 @@ public class Main_AD extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -213,7 +224,11 @@ public class Main_AD extends javax.swing.JFrame {
         tableRole2 = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
         cbbListColumn = new javax.swing.JComboBox<>();
+        btnThuQuyenRole = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
+        btnLayDSTable = new javax.swing.JButton();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tableListTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnLoadNV = new javax.swing.JButton();
@@ -226,6 +241,19 @@ public class Main_AD extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane6.setViewportView(jTextArea1);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane8.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -628,6 +656,13 @@ public class Main_AD extends javax.swing.JFrame {
 
         jLabel20.setText("Tên cột:");
 
+        btnThuQuyenRole.setText("Thu quyền");
+        btnThuQuyenRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThuQuyenRoleActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -635,7 +670,7 @@ public class Main_AD extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(btnLayThongTin)
                         .addGap(18, 18, 18)
@@ -657,7 +692,9 @@ public class Main_AD extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cbbListColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnPhanQuyenRole)))
+                                .addComponent(btnPhanQuyenRole)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnThuQuyenRole)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -676,7 +713,8 @@ public class Main_AD extends javax.swing.JFrame {
                     .addComponent(btnLayThongTin)
                     .addComponent(cbbListColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbListPrivs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPhanQuyenRole))
+                    .addComponent(btnPhanQuyenRole)
+                    .addComponent(btnThuQuyenRole))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                 .addContainerGap())
@@ -696,7 +734,7 @@ public class Main_AD extends javax.swing.JFrame {
                         .addComponent(tfNewRole, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(59, 59, 59)
                         .addComponent(btnThemRole)
-                        .addGap(0, 596, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -714,18 +752,50 @@ public class Main_AD extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("QL Role", jPanel5);
 
+        btnLayDSTable.setText("Lấy DS Bảng");
+        btnLayDSTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLayDSTableActionPerformed(evt);
+            }
+        });
+
+        tableListTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane9.setViewportView(tableListTable);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1005, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(btnLayDSTable)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLayDSTable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("QL Table", jPanel6);
+        jTabbedPane2.addTab("QL Bảng", jPanel6);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Xem nhân viên"));
 
@@ -836,7 +906,7 @@ public class Main_AD extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1009, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1009, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1012,7 +1082,7 @@ public class Main_AD extends javax.swing.JFrame {
         // TODO add your handling code here:
         String value=listRoleCoSan.getSelectedValue();
         String username=cbbNhanVien.getSelectedItem().toString();
-        if(value !=null && username !=null)
+        if(value !=null && !username.equals("----"))
         {
             int index=listRoleCoSan.getSelectedIndex();
 
@@ -1045,7 +1115,7 @@ public class Main_AD extends javax.swing.JFrame {
         // TODO add your handling code here:
         String value=listRoleDuocCap.getSelectedValue();
         String username=cbbNhanVien.getSelectedItem().toString();
-        if(value !=null && username!=null)
+        if(value !=null && !username.equals("----"))
         {
             int index=listRoleDuocCap.getSelectedIndex();
             DefaultListModel model1 = (DefaultListModel) listRoleDuocCap.getModel();
@@ -1170,7 +1240,7 @@ public class Main_AD extends javax.swing.JFrame {
 
     private void btnThemRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemRoleActionPerformed
         // TODO add your handling code here:
-        if(!tfNewRole.getText().toUpperCase().startsWith("NV")){
+        if(!tfNewRole.getText().toUpperCase().startsWith("ROLE")){
             JOptionPane.showMessageDialog(null, "Tên role phải bắt đầu là ROLE_.","Thông báo",1);
             return;
         }
@@ -1220,13 +1290,7 @@ public class Main_AD extends javax.swing.JFrame {
 
     private void cbbListRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbListRoleActionPerformed
         // TODO add your handling code here:
-        int index = cbbListRole.getSelectedIndex();
-        if (index>=0)
-        {
-            String roleName= cbbListRole.getItemAt(index);
-            System.out.println(roleName);
-            loadRolePrivs2(roleName);
-        }
+        loadRolePrivs2();
     }//GEN-LAST:event_cbbListRoleActionPerformed
 
     private void btnPhanQuyenRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanQuyenRoleActionPerformed
@@ -1242,7 +1306,7 @@ public class Main_AD extends javax.swing.JFrame {
             String columnName= cbbListColumn.getItemAt(indexColumn);
             String privsName= cbbListPrivs.getItemAt(indexPrivs);
             String strGet ;
-            if(privsName.toUpperCase().equals("INSERT") || privsName.toUpperCase().equals("UPDATE"))
+            if(privsName.toUpperCase().equals("UPDATE"))
             {
                 strGet = "grant "+privsName+"("+ columnName +") on " + tableName + " to " + roleName;
             }
@@ -1254,7 +1318,9 @@ public class Main_AD extends javax.swing.JFrame {
             try {
                     PreparedStatement pstmt = con.prepareStatement(strGet);
                     pstmt.executeUpdate();
+                    loadRolePrivs2();
                 } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi xảy ta khi kết nối CSDL.","Thông báo",1);
                     e.printStackTrace();
             }
         }
@@ -1278,11 +1344,68 @@ public class Main_AD extends javax.swing.JFrame {
                     }
                 }
                 } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi xảy ta khi kết nối CSDL.","Thông báo",1);
                     e.printStackTrace();
             }
             cbbListColumn.setModel(dcbm_column);
         }
     }//GEN-LAST:event_cbbListTableActionPerformed
+
+    private void btnThuQuyenRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuQuyenRoleActionPerformed
+        // TODO add your handling code here:
+        int row= tableRole2.getSelectedRow();
+        int index=cbbListRole.getSelectedIndex();
+        if(row>=0 || index >=0)
+        {
+            String tableName = tableRole2.getValueAt(row, 0).toString();
+            //String columnName = tableRole2.getValueAt(row, 1).toString();
+            String privsName = tableRole2.getValueAt(row, 2).toString();
+            String roleName = cbbListRole.getSelectedItem().toString();
+            String strGet = "Revoke "+privsName+" on "+tableName+" from "+roleName;
+            System.out.println(strGet);
+            try {
+                    PreparedStatement pstmt = con.prepareStatement(strGet);
+                    pstmt.executeUpdate();
+                    loadRolePrivs2();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi xảy ta khi kết nối CSDL.","Thông báo",1);
+                    e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnThuQuyenRoleActionPerformed
+
+    private void btnLayDSTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLayDSTableActionPerformed
+        // TODO add your handling code here:
+        Vector clums = new Vector();
+        clums.add("Tên bảng");
+        clums.add("Tên cột");
+        clums.add("Kiểu dữ liệu");
+        clums.add("Số byte");
+        Vector data = new Vector();
+
+        String strGet = "select table_name,column_name,data_type,data_length"
+                + " from user_tab_columns"
+                + " order by table_name,column_name ASC";
+        System.out.println(strGet);
+        try {
+            PreparedStatement pstmt = con.prepareStatement(strGet);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs!=null){
+                while (rs.next()) {
+                    Vector row = new Vector();
+                    row.add(rs.getString(1));
+                    row.add(rs.getString(2));
+                    row.add(rs.getString(3));
+                    row.add(rs.getString(4));
+                    data.add(row);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            DefaultTableModel dtm_Table= new DefaultTableModel(data, clums);
+            tableListTable.setModel(dtm_Table);
+    }//GEN-LAST:event_btnLayDSTableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1324,11 +1447,13 @@ public class Main_AD extends javax.swing.JFrame {
     private javax.swing.JButton btnCapNhatNV;
     private javax.swing.JButton btnCapNhatNhan;
     private javax.swing.JButton btnCapRole;
+    private javax.swing.JButton btnLayDSTable;
     private javax.swing.JButton btnLayThongTin;
     private javax.swing.JButton btnLoadNV;
     private javax.swing.JButton btnPhanQuyenRole;
     private javax.swing.JButton btnThemNV;
     private javax.swing.JButton btnThemRole;
+    private javax.swing.JButton btnThuQuyenRole;
     private javax.swing.JButton btnThuRole;
     private javax.swing.JComboBox<String> cbbCapBac;
     private javax.swing.JComboBox<String> cbbListColumn;
@@ -1373,12 +1498,16 @@ public class Main_AD extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JList<String> listRoleCoSan;
     private javax.swing.JList<String> listRoleDuocCap;
     private javax.swing.JPanel pnThemNV;
+    private javax.swing.JTable tableListTable;
     private javax.swing.JTable tableNV;
     private javax.swing.JTable tablePrivs;
     private javax.swing.JTable tableRole1;

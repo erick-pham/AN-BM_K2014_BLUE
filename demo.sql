@@ -25,6 +25,7 @@ select distinct grantee,table_name,column_name,privilege from Role_tab_privs,Dba
 -- danh sách các role có trong hệ thống
 select * from Dba_roles;
 
+select * from Dba_tab_privs;
 
 -- quyền của role trên bảng
 select * from Role_tab_privs;
@@ -48,6 +49,12 @@ grant role_nv to NV101;
 
 revoke role_giamdoc from nv101;
 
+grant select on phongban to nv101;
+grant insert on phongban to role_xemPB;
+revoke insert on phongban from role_xempb;
+revoke select on phongban from nv101;
+Revoke all on PHONGBAN from ROLE_GIAMDOC;
+Revoke UPDATE on PHONGBAN from ROLE_XEMPB;
 -- thông tin quyền hệ thống mức cột của user session
 select * from Dba_col_privs where grantee like 'ROLE_NV';
 
@@ -86,10 +93,10 @@ select * from user_views;
 
 SELECT table_name, owner, tablespace_name FROM all_tables where owner like 'QLDA';
 SELECT * FROM all_role;
-
+SELECT * FROM all_tables where owner like 'QLDA';
 SELECT object_id, object_name FROM USER_OBJECTS where object_type like 'TABLE';
 SELECT view_name FROM all_views;
 
-select * from user_source;
+select * from QLDA.NHANVIEN;
 grant Select(MAPHONG) ON PHONGBAN to ROLE_GIAMDOC;
 GRANT update(MAPHONG) ON PHONGBAN TO ROLE_GIAMDOC;
