@@ -90,6 +90,7 @@ public class Main_Individual extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
+            this.show(false);
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!.","Thông báo",1);
             e.printStackTrace();
         }

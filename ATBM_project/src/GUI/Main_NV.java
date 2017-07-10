@@ -123,11 +123,6 @@ public class Main_NV extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableNV.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableNVMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tableNV);
         if (tableNV.getColumnModel().getColumnCount() > 0) {
             tableNV.getColumnModel().getColumn(0).setResizable(false);
@@ -459,23 +454,13 @@ public class Main_NV extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi kết nối CSDL.","Thông báo",1);
             e.printStackTrace();
         }
         DefaultTableModel dtm_NV= new DefaultTableModel(data, clums);
         tableNV.setModel(dtm_NV);
 
     }//GEN-LAST:event_btnLoadNVActionPerformed
-
-    private void tableNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableNVMouseClicked
-        // TODO add your handling code here:
-        int row= tableNV.getSelectedRow();
-        if(row>=0)
-        {
-            tfLuong.setText(tableNV.getValueAt(row, 5).toString());
-            tfPhuCap.setText(tableNV.getValueAt(row, 6).toString());
-            cbbPhong.setSelectedItem(tableNV.getValueAt(row, 7).toString());
-        }
-    }//GEN-LAST:event_tableNVMouseClicked
 
     /**
      * @param args the command line arguments
