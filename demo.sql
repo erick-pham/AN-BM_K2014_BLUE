@@ -39,6 +39,8 @@ select * from User_tab_privs;
 -- quyền trên col của user session
 select * from User_col_privs;
 
+SELECT * FROM DBA_col_PRIVS where grantee like 'NV%';
+SELECT * FROM DBA_tab_PRIVS where grantee like 'NV%';
 
 select * from Dba_profiles;
 
@@ -100,3 +102,6 @@ SELECT view_name FROM all_views;
 select * from QLDA.NHANVIEN;
 grant Select(MAPHONG) ON PHONGBAN to ROLE_GIAMDOC;
 GRANT update(MAPHONG) ON PHONGBAN TO ROLE_GIAMDOC;
+
+grant  ROLE_TRUONG_PHONG to nv106;
+grant  ROLE_TRUONG_PHONG to nv111;
